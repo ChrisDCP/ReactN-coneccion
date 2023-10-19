@@ -37,16 +37,15 @@ namespace GastosApi.Controllers
             using var conexion = new SqlConnection(_config.GetConnectionString("MyDB"));
             conexion.Open();
             var param = new DynamicParameters();
-            param.Add("@id", user.UserID);
             param.Add("@nombre", user.UserName);
             param.Add("@password", user.Password);
-            var oUsuario = conexion.Query<Usuario>("Insjuego", param, commandType: System.Data.CommandType.StoredProcedure)
+            var oUsuario = conexion.Query<Usuario>("InsUsuario", param, commandType: System.Data.CommandType.StoredProcedure)
             .SingleOrDefault();
             return Ok(oUsuario);
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Usuario>>> ActUsuario(Usuario user)
+        public async Task<ActionResult<List<Usuario>>> ActUsuario(Usuario user, int UserId)
         {
             using var conexion = new SqlConnection(_config.GetConnectionString("MyDB"));
             conexion.Open();
